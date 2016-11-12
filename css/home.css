@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+}
+
+#map {
+  position: relative;
+  height: 100%;
+}
+
+.navbar {
+  margin-bottom: 0px;
+  border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+  -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+  z-index: 1;
+}
+
+#navmenu {
+  /*background: red; /* For browsers that do not support gradients */
+  /*background: -webkit-linear-gradient(#FFCB40, #D18500); /* For Safari 5.1 to 6.0 */
+  /*background: -o-linear-gradient(#FFCB40, #D18500); /* For Opera 11.1 to 12.0 */
+  /*background: -moz-linear-gradient(#FFCB40, #D18500); /* For Firefox 3.6 to 15 */
+  /*background: linear-gradient(#FFCB40, #D18500);*/
+  -webkit-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+  -moz-box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+  position: relative;;
+  background: #EDBB99;
+  height: 50px;
+  width: 100%;
+  z-index: 1;
+  display: inline-table;
+}
+
+#title {
+  font-size: 25px;
+  height: 50px;
+  padding-left: 30px;
+  vertical-align: middle;
+  display: table-cell;
+  color: #873600;
+}
+
+.menu-button {
+  font-size: 25px;
+  height: 50px;
+  color: #873600;
+  vertical-align: middle;
+  display: table-cell;
+  margin: 0;
+}
+
+.menu-button:hover {
+  cursor: pointer;
+}

@@ -46,4 +46,16 @@ function showError(error) {
     }
 }
 
+function toDetail() {
+  $.ajax({
+    url: "detail.php", 
+    success: function(result){
+      $("#detail").html(result);
+      $("#detail").css("width", "40%");
+      $("#map").css("width", "60%");
+    }
+  });
+}
+
 getLocation();
+

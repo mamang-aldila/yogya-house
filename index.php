@@ -21,11 +21,13 @@
     </div>
 
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#"><span class="glyphicon glyphicon-search"></span> Search</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+      <li><a ><span class="glyphicon glyphicon-search"></span> Search</a></li>
+      <li><a ><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+      <!-- <li><a onclick="toDetail()"><span class="glyphicon glyphicon-cog"></span> Settings</a></li> -->
     </ul>
   </div>
 </nav>
+<div id="detail"></div>
 <div id="map"></div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGkZNDZAFnMFJJ-q9JnDXxGBVLSJ5GSag&callback=houseMap"></script>
 </body>

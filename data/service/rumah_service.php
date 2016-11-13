@@ -3,34 +3,22 @@ include 'base_service.php';
 
 function all() {
 	$all = array();
-	$stmt = getConnection()->prepare('
-            SELECT latitude, longitude FROM rumah
-        ');
-        $stmt->execute();
+	$stmt = getConnection()->prepare('SELECT latitude, longitude FROM rumah');
+    $stmt->execute();
 
-        // $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        $result = $stmt->fetchAll();
-        print_r(json_encode($result));
-        // print_r($result);
-        // for($i = 0; $i < count($result);$i++) {
-        // 	print_r($result[$i]);
-        // 	$latlng = array();
-        // 		$latlng[] = $result[$i][0];
-        // 		$latlng[] = $result[$i][0];
-        // 		$all[] = $latlng;
-        // }
-        // if (isset($result)) {
-        	// while ($row = $result) {
-        	// 	$latlng = array();
-        	// 	$latlng[] = $row['latitude'];
-        	// 	$latlng[] = $row['longitude'];
-        	// 	$all[] = $latlng;
-        	// }	
+    $result = $stmt->fetchAll();
+    print_r(json_encode($result));
+}
 
-        	// print_r($all);
-        // } else {
-        // 	echo false;
-        // }
+function find() {
+	$all = array();
+	$stmt = getConnection()->prepare('SELECT * FROM rumah WHERE latitude = :lat AND longitude = :lng');
+	$stmt->bindParam(':lat', $_POST['latitude']);
+   	$stmt->bindParam(':lng', $_POST['longitude']);
+    $stmt->execute();
+
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    print_r(json_encode($result));
 }
 
 function save() {
@@ -42,7 +30,6 @@ function save() {
         $stmt->bindParam(':no_telp', $_POST['no_telp']);
         $stmt->bindParam(':keterangan', $_POST['keterangan']);
         $stmt->bindParam(':harga', $_POST['harga']);
-        // $stmt->execute();
         
         if ($stmt->execute()) {	
         	echo true;
@@ -51,7 +38,10 @@ function save() {
         }
 }
 
-if (isset($_POST['nama'])) {
+
+if (!isset($_POST['nama']) && isset($_POST['latitude'])) {
+   	find();
+} else if (isset($_POST['nama'])) {
 	save();
 } else {
 	all();

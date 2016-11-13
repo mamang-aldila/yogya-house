@@ -1,3 +1,9 @@
+<?
+if (session_status() !== PHP_SESSION_ACTIVE) {
+  session_start();
+}
+?>
+
 <html>
 <head>
   <title>Rumah dijual</title>
@@ -21,14 +27,19 @@
     </div>
 
     <ul class="nav navbar-nav navbar-right">
-      <li><a ><span class="glyphicon glyphicon-search"></span> Search</a></li>
-      <li><a ><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-      <!-- <li><a onclick="toDetail()"><span class="glyphicon glyphicon-cog"></span> Settings</a></li> -->
+    <?
+    if (isset($_SESSION['user_id'])) {
+      echo '<li><div class="menu-button" onclick="addData()"><span class="glyphicon glyphicon-plus"></span> Tambah Data</div></li>
+      <li><div class="menu-button" onclick="logout()"><span class="glyphicon glyphicon-log-out"></span> Keluar</div></li>';
+    } else {
+      echo '<li><div class="menu-button" onclick="loginPage()"><span class="glyphicon glyphicon-log-in"></span> Masuk</div></li>';
+    }
+    ?>
     </ul>
   </div>
 </nav>
 <div id="detail"></div>
 <div id="map"></div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGkZNDZAFnMFJJ-q9JnDXxGBVLSJ5GSag&callback=houseMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyBGkZNDZAFnMFJJ-q9JnDXxGBVLSJ5GSag&callback=houseMap"></script>
 </body>
 </html>

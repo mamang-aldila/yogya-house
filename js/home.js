@@ -131,6 +131,7 @@ function allData() {
   $.ajax({
     url: "data/service/rumah_service.php", 
     success: function(result){
+      console.log("result all  : " + result);
       rumahArray = JSON.parse(result);
       console.log("result rumahArray  : " + rumahArray.length);
     }

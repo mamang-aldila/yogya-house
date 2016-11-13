@@ -3,6 +3,7 @@ var rumahArray;
 function houseMap(lat, lng) {
   var mapCanvas = document.getElementById('map');
   var positionFirst;
+
   if (lat != null && lng != null) {
     positionFirst = new google.maps.LatLng(lat, lng);
   } else {
@@ -16,6 +17,8 @@ function houseMap(lat, lng) {
   }
 
   map = new google.maps.Map(mapCanvas, mapOptions);
+  allData();
+
   google.maps.event.addListener(map,'click',function(event) {
     var latForm = $('#lat');
     var lngForm = $('#lng');
@@ -29,21 +32,7 @@ function houseMap(lat, lng) {
   });
 
   // if (rumahArray == null) {
-    allData();
-    if (rumahArray != null && rumahArray.length > 0) {
-      for (var i = 0; i < rumahArray.length; i++) {
-        var myLatLng = new google.maps.LatLng(Number(rumahArray[i][0]), Number(rumahArray[i][1]));
-        var marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map
-          });
-
-        google.maps.event.addListener(marker, 'click', function(event) {
-            console.log("marker lat  : " + event.latLng.lat() + ", marker lng : " + event.latLng.lng());
-            detail(event.latLng.lat(), event.latLng.lng());
-        });
-      }
-    }
+    
   // }
 }
 
@@ -133,6 +122,19 @@ function allData() {
     success: function(result){
       console.log("result all  : " + result);
       rumahArray = JSON.parse(result);
+      if (rumahArray != null && rumahArray.length > 0) {
+          for (var i = 0; i < rumahArray.length; i++) {
+            var myLatLng = new google.maps.LatLng(Number(rumahArray[i][0]), Number(rumahArray[i][1]));
+            var marker = new google.maps.Marker({
+              position: myLatLng,
+              map: map });
+
+              google.maps.event.addListener(marker, 'click', function(event) {
+                  console.log("marker lat  : " + event.latLng.lat() + ", marker lng : " + event.latLng.lng());
+                  detail(event.latLng.lat(), event.latLng.lng());
+              });
+          }
+      }
       console.log("result rumahArray  : " + rumahArray.length);
     }
   });

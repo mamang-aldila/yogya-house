@@ -22,7 +22,7 @@ function getConnection() {
 	// }
 
 	// return new PDO('mysql:host=localhost;dbname=jual-beli-rumah', 'root', '');
-	return new PDO('mysql:host=mysql.idhostinger.com;dbname=u655896071_rumah', '655896071_aldi', 'qwerasdf');
+	return new PDO('mysql:host=mysql.idhostinger.com;dbname=u655896071_rumah', 'u655896071_aldi', 'qwerasdf');
 }
 
 ?>

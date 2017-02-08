@@ -6,7 +6,7 @@ include 'base_service.php';
 
 function login() {
 	$stmt = getConnection()->prepare('
-            SELECT * FROM user 
+            SELECT * FROM user
              WHERE email = :email
              AND password = :password
         ');
@@ -21,7 +21,7 @@ function login() {
         		echo true;
         	} else {
         		echo false;
-        	}	
+        	}
         }
 }
 

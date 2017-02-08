@@ -13,6 +13,8 @@
 	<input type="text" name="keterangan" class="form-control" required="true">
 	<label>Harga</label><br>
 	<input type="text" name="harga" class="form-control" required="true"><br>
-	<button class="btn btn-success" onclick="saveData()">Simpan</button> 
-	<button class="btn btn-danger" onclick="cancel()">Batal</button> 
+	<label>Gambar </label><br>
+	<input class="form-control" type="file" placeholder="File Gambar" name="gambar" id="image_file"/><br>
+	<button class="btn btn-success" onclick="saveData()">Simpan</button>
+	<button class="btn btn-danger" onclick="cancel()">Batal</button>
 </div>

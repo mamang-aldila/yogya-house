@@ -2,6 +2,7 @@
 	<?
 		$json_detail = json_decode($_POST['detail']);
 	?>
+	<img src="<? echo $json_detail->image ?>" height="200px"/><br>
 	<label>Nama</label><br>
 	<p><? echo $json_detail->nama ?></p>
 	<label>Alamat</label><br>

@@ -24,7 +24,7 @@ function find() {
 function save() {
 	//    $imagesFolder = "web_dev/api-nanang/images/";
 	// $imagesFolder = "/Applications/XAMPP/htdocs/house-aldi/images/";
-	$imagesFolder = "/public_html/images/";
+	$imagesFolder = "/home/u655896071/public_html/images/";
 	$target_file = $imagesFolder . basename($_FILES["gambar"]["name"]);
 	$uploadOk = 1;
 	$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);

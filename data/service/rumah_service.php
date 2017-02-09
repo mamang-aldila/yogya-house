@@ -12,7 +12,7 @@ function all() {
 
 function find() {
 	$all = array();
-	$stmt = getConnection()->prepare('SELECT * FROM rumah WHERE latitude = :lat AND longitude = :lng');
+	$stmt = getConnection()->prepare('SELECT * FROM rumah WHERE latitude = :lat OR longitude = :lng');
 	$stmt->bindParam(':lat', $_POST['latitude']);
 	$stmt->bindParam(':lng', $_POST['longitude']);
 	$stmt->execute();

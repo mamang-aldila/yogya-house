@@ -160,7 +160,7 @@ function allData() {
       url: "data/service/rumah_service.php",
       data: { 'latitude' : lat, 'longitude' : lng },
       success: function(result){
-        // console.log("result detail  : " + result);
+        console.log("result detail  : " + result);
         $.post( "detail.php", { detail: result })
         .done(function( data ) {
           $("#detail").html(data);

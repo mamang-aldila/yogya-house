@@ -142,12 +142,11 @@ function allData() {
           var marker = new google.maps.Marker({
             position: myLatLng,
             map: map,
-            id: rumahArray[i][0].toString()});
+            id: rumahArray[i][0]});
             console.log("id rumah  : " + rumahArray[i][0]);
             // marker.set("id", rumahArray[i][0]);
 
             google.maps.event.addListener(marker, 'click', function(event) {
-              console.log("marker info : " + marker);
               console.log("marker title : " + marker.id + " lat  : " + event.latLng.lat() + ", marker lng : " + event.latLng.lng());
               detail(marker.id, event.latLng.lat(), event.latLng.lng());
             });

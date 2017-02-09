@@ -3,7 +3,7 @@ include 'base_service.php';
 
 function all() {
 	$all = array();
-	$stmt = getConnection()->prepare('SELECT latitude, longitude FROM rumah');
+	$stmt = getConnection()->prepare('SELECT id, latitude, longitude FROM rumah');
 	$stmt->execute();
 
 	$result = $stmt->fetchAll();

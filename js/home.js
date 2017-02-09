@@ -138,14 +138,15 @@ function allData() {
       rumahArray = JSON.parse(result);
       if (rumahArray != null && rumahArray.length > 0) {
         for (var i = 0; i < rumahArray.length; i++) {
-          var myLatLng = new google.maps.LatLng(Number(rumahArray[i][0]), Number(rumahArray[i][1]));
+          var myLatLng = new google.maps.LatLng(Number(rumahArray[i][1]), Number(rumahArray[i][2]));
           var marker = new google.maps.Marker({
             position: myLatLng,
             map: map });
+            marker.set("id", rumahArray[i][0]);
 
             google.maps.event.addListener(marker, 'click', function(event) {
               console.log("marker lat  : " + event.latLng.lat() + ", marker lng : " + event.latLng.lng());
-              detail(event.latLng.lat(), event.latLng.lng());
+              detail(marker.get("id"), event.latLng.lat(), event.latLng.lng());
             });
           }
         }
@@ -154,11 +155,11 @@ function allData() {
     });
   }
 
-  function detail(lat, lng) {
+  function detail(id, lat, lng) {
     $.ajax({
       type: 'POST',
       url: "data/service/rumah_service.php",
-      data: { 'latitude' : lat, 'longitude' : lng },
+      data: { 'id' : id, 'latitude' : lat, 'longitude' : lng },
       success: function(result){
         console.log("result detail  : " + result);
         $.post( "detail.php", { detail: result })

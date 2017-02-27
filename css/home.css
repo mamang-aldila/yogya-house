@@ -65,9 +65,11 @@ body {
 }
 
 #detail {
-  background: #fff; 
-  position: relative; 
-  z-index: 1; 
-  height: 100%; 
+  background: #fff;
+  position: relative;
+  z-index: 1;
+  height: 100%;
   float: right;
+  overflow-y: auto;
+  padding-bottom: 200px;
 }

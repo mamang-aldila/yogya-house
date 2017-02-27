@@ -36,6 +36,21 @@ function houseMap(lat, lng) {
   // }
 }
 
+function distance(lat1, lon1, lat2, lon2) {
+  var radlat1 = Math.PI * lat1/180
+  var radlat2 = Math.PI * lat2/180
+  var theta = lon1-lon2
+  var radtheta = Math.PI * theta/180
+  var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+  dist = Math.acos(dist)
+  dist = dist * 180/Math.PI
+  dist = dist * 60 * 1.1515
+  dist = dist * 1.609344
+  // if (unit=="K") { dist = dist * 1.609344 }
+  // if (unit=="N") { dist = dist * 0.8684 }
+  return dist
+}
+
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -157,6 +172,15 @@ function allData() {
     });
   }
 
+  function callback(results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+
+      }
+    }
+  }
+
+
   function detail(id, lat, lng) {
     $.ajax({
       type: 'POST',
@@ -164,11 +188,24 @@ function allData() {
       data: { 'id' : id, 'latitude' : lat, 'longitude' : lng },
       success: function(result){
         console.log("result detail  : " + result);
-        $.post( "detail.php", { detail: result })
-        .done(function( data ) {
-          $("#detail").html(data);
-          $("#detail").css("width", "40%");
-          $("#map").css("width", "60%");
+        var jsonResult = JSON.parse(result);
+        jsonResult.distance_jogja = Number(distance(-7.803249, 110.3398253, jsonResult.latitude, jsonResult.longitude)).toFixed(2);
+        var markerClickLocation = {lat: Number(jsonResult.latitude), lng: Number(jsonResult.longitude)};
+        var service = new google.maps.places.PlacesService(map);
+        service.nearbySearch({
+          location: markerClickLocation,
+          radius: 500,
+          type: ['hospital']
+        }, function(results, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            jsonResult.nearby_hospitals = results;
+            $.post( "detail.php", { detail: JSON.stringify(jsonResult) })
+            .done(function( data ) {
+              $("#detail").html(data);
+              $("#detail").css("width", "40%");
+              $("#map").css("width", "60%");
+            });
+          }
         });
       }
     });

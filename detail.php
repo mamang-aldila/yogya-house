@@ -17,5 +17,15 @@
 	<p><? echo $json_detail->keterangan ?></p>
 	<label>Harga</label><br>
 	<p><? echo $json_detail->harga ?></p>
+	<label>Jarak Lokasi ke Kota Yogyakarta</label><br>
+	<p><? echo $json_detail->distance_jogja . " KM" ?></p>
+	<label>Rumah Sakit Terdekat</label><br>
+	<ul>
+		<?
+		foreach ($json_detail->nearby_hospitals as $value) {
+			echo '<li>'. $value->name .'</li>';
+		}
+		?>
+	</ul>
 	<button class="btn btn-warning" onclick="cancel()">Selesai</button>
 </div>

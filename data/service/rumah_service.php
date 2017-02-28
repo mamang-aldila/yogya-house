@@ -23,8 +23,8 @@ function find() {
 
 function save() {
 	//    $imagesFolder = "web_dev/api-nanang/images/";
-	// $imagesFolder = "/Applications/XAMPP/htdocs/house-aldi/images/";
-	$imagesFolder = "http://rumah-yogya.esy.es/images/";
+	$imagesFolder = "/Applications/XAMPP/htdocs/house-aldi/images/";
+	// $imagesFolder = "http://rumah-yogya.esy.es/images/";
 	$target_file = $imagesFolder . basename($_FILES["gambar"]["name"]);
 	$uploadOk = 1;
 	$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
@@ -38,15 +38,15 @@ function save() {
 		$uploadOk = 0;
 	}
 
-	// $image_location = "http://localhost/house-aldi/images/".$_FILES["gambar"]["name"];
-	$image_location = "http://rumah-yogya.esy.es/images/".$_FILES["gambar"]["name"];
+	$image_location = "http://localhost/house-aldi/images/".$_FILES["gambar"]["name"];
+	// $image_location = "http://rumah-yogya.esy.es/images/".$_FILES["gambar"]["name"];
 
 	if ($uploadOk == 0) {
 		echo "Sorry, your file was not uploaded.";
 	} else {
 		try {
 			if (move_uploaded_file($_FILES["gambar"]["tmp_name"], $target_file)) {
-				$stmt = getConnection()->prepare('INSERT INTO `rumah`(`nama`, `alamat`, `latitude`, `longitude`, `no_telp`, `keterangan`, `harga`, `image`) VALUES (:nama, :alamat, :latitude, :longitude, :no_telp, :keterangan, :harga, :image)');
+				$stmt = getConnection()->prepare('INSERT INTO `rumah`(`nama`, `alamat`, `latitude`, `longitude`, `no_telp`, `keterangan`, `harga`, `image`, `id_location`) VALUES (:nama, :alamat, :latitude, :longitude, :no_telp, :keterangan, :harga, :image, :id_location)');
 				$stmt->bindParam(':nama', $_POST['nama']);
 				$stmt->bindParam(':alamat', $_POST['alamat']);
 				$stmt->bindParam(':latitude', $_POST['latitude']);
@@ -55,6 +55,7 @@ function save() {
 				$stmt->bindParam(':keterangan', $_POST['keterangan']);
 				$stmt->bindParam(':harga', $_POST['harga']);
 				$stmt->bindParam(':image', $image_location);
+				$stmt->bindParam(':id_location', $_POST['kabupaten']);
 
 				if ($stmt->execute()) {
 					echo true;
@@ -87,10 +88,22 @@ function distance($lat1, $lon1, $lat2, $lon2, $unit) {
 	// }
 }
 
+function findByKabupaten() {
+	$query = '%' . $_POST['q'] . '%';
+	$stmt = getConnection()->prepare('SELECT r.nama, r.latitude, r.longitude, r.alamat, r.harga, l.nama AS nama_kabupaten FROM rumah r INNER JOIN lokasi l ON r.id_location = l.id WHERE l.nama LIKE :name');
+	$stmt->bindParam(':name', $query);
+	$stmt->execute();
+
+	$result = $stmt->fetchAll();
+	print_r(json_encode($result));
+}
+
 if (!isset($_POST['nama']) && isset($_POST['latitude'])) {
 	find();
 } else if (isset($_POST['nama'])) {
 	save();
+} else if (isset($_POST['q'])) {
+	findByKabupaten();
 } else {
 	all();
 }

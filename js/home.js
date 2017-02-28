@@ -103,6 +103,23 @@ function loginPage() {
   });
 }
 
+function searchPage() {
+  // console.log("search query : " + $('input:text[name=q]').val());
+  $.ajax({
+    type: 'POST',
+    url: "data/service/rumah_service.php",
+    data: { 'q' :  $('input:text[name=q]').val() },
+    success: function( result ){
+      $.post( "search.php", { search_results : result })
+      .done(function(data) {
+        $("#detail").html(data);
+        $("#detail").css("width", "40%");
+        $("#map").css("width", "60%");
+      });
+    }
+  });
+}
+
 function cancel() {
   $("#detail").css("width", "0%");
   $("#map").css("width", "100%");
@@ -116,6 +133,7 @@ function saveData() {
   var telp = $('input:text[name=telepon]').val();
   var ket = $('input:text[name=keterangan]').val();
   var harga = $('input:text[name=harga]').val();
+  var kabupaten = $('#kabupaten-selector').val();
   var image = document.getElementById('image_file');
 
   var formData = new FormData();
@@ -127,8 +145,9 @@ function saveData() {
   formData.append('keterangan', ket);
   formData.append('harga', harga);
   formData.append('gambar', image.files[0], image.files[0].name);
+  formData.append('kabupaten', kabupaten);
 
-  console.log("nama " + nama + ", alamat" + alamat + ", latitude" + lat + ", longitude" + lng + ", no_telp" + telp + ", keterangan" + ket +", harga" + harga);
+  // console.log("nama " + nama + ", alamat" + alamat + ", latitude" + lat + ", longitude" + lng + ", no_telp" + telp + ", keterangan" + ket +", harga" + harga + ", kabupaten : " + kabupaten);
   $.ajax({
     url: "data/service/rumah_service.php",
     type: 'POST',
@@ -149,7 +168,7 @@ function allData() {
   $.ajax({
     url: "data/service/rumah_service.php",
     success: function(result){
-      console.log("result all  : " + result);
+      // console.log("result all  : " + result);s
       rumahArray = JSON.parse(result);
       if (rumahArray != null && rumahArray.length > 0) {
         for (var i = 0; i < rumahArray.length; i++) {
@@ -158,28 +177,19 @@ function allData() {
             position: myLatLng,
             map: map,
             id: rumahArray[i][0]});
-            console.log("id rumah  : " + rumahArray[i][0]);
-            // marker.set("id", rumahArray[i][0]);
+            // console.log("id rumah  : " + rumahArray[i][0]);
 
             google.maps.event.addListener(marker, 'click', function(event) {
-              console.log("marker title : " + marker.id + " lat  : " + event.latLng.lat() + ", marker lng : " + event.latLng.lng());
+              var currentLatlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
+              map.setCenter(currentLatlng);
               detail(marker.id, event.latLng.lat(), event.latLng.lng());
             });
           }
         }
-        console.log("result rumahArray  : " + rumahArray.length);
+        // console.log("result rumahArray  : " + rumahArray.length);
       }
     });
   }
-
-  function callback(results, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-      for (var i = 0; i < results.length; i++) {
-
-      }
-    }
-  }
-
 
   function detail(id, lat, lng) {
     $.ajax({
@@ -187,7 +197,7 @@ function allData() {
       url: "data/service/rumah_service.php",
       data: { 'id' : id, 'latitude' : lat, 'longitude' : lng },
       success: function(result){
-        console.log("result detail  : " + result);
+        // console.log("result detail  : " + result);
         var jsonResult = JSON.parse(result);
         jsonResult.distance_jogja = Number(distance(-7.803249, 110.3398253, jsonResult.latitude, jsonResult.longitude)).toFixed(2);
         var markerClickLocation = {lat: Number(jsonResult.latitude), lng: Number(jsonResult.longitude)};

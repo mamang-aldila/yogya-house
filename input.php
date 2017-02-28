@@ -3,6 +3,21 @@
 	<input type="text" name="nama" class="form-control" required="true">
 	<label>Alamat</label><br>
 	<input type="text" name="alamat" class="form-control" required="true">
+	<label>Kabupaten</label><br>
+	<select class="form-control" id="kabupaten-selector">
+		<?
+		include 'data/service/base_service.php';
+
+		$stmt = getConnection()->prepare('SELECT * FROM lokasi');
+		$stmt->execute();
+
+		$result = $stmt->fetchAll();
+
+		foreach ($result as $row) {
+			echo '<option value="'. $row["id"] .'">'. $row["nama"] .'</option>';
+		}
+		?>
+	</select><br>
 	<label>Latitude</label><br>
 	<input id="lat" type="text" name="latitude" class="form-control" required="true">
 	<label>Longitude</label><br>

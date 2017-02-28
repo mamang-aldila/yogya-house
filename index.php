@@ -29,9 +29,9 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
       <li>
         <form class="navbar-form" role="search">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search" name="q">
+            <input type="text" class="form-control" placeholder="Kabupaten..." name="q">
             <div class="input-group-btn" >
-              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search" style="padding-top: 3px; padding-bottom: 3px;"></i></button>
+              <button class="btn btn-default" type="button" onclick="searchPage()"><i class="glyphicon glyphicon-search" style="padding-top: 3px; padding-bottom: 3px;"></i></button>
             </div>
           </div>
         </form>

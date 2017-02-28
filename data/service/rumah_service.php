@@ -23,7 +23,8 @@ function find() {
 
 function save() {
 	// $imagesFolder = "/Applications/XAMPP/htdocs/house-aldi/images/";
-	$imagesFolder = "http://rumah-yogya.esy.es/images/";
+	// $imagesFolder = "http://rumah-yogya.esy.es/images/";
+	$imagesFolder = "/public_html/images/";
 	$target_file = $imagesFolder . basename($_FILES["gambar"]["name"]);
 	$uploadOk = 1;
 	$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);

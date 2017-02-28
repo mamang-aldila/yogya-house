@@ -8,7 +8,7 @@
 		<?
 		include 'data/service/base_service.php';
 
-		$stmt = getConnection()->prepare('SELECT * FROM lokasi');
+		$stmt = getConnection()->prepare('SELECT * FROM lokasi ORDER BY nama ASC');
 		$stmt->execute();
 
 		$result = $stmt->fetchAll();

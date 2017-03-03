@@ -5,7 +5,7 @@
 	<ul id="item_search_container">
 		<?
 		foreach ($json_detail as $value) {
-			echo '<li class="item_search"><ul><li class="name_section">'. $value->nama .'</li><li class="harga_section">'. $value->harga .'</li><li class="kabupaten_section">'. $value->nama_kabupaten .'</li></ul></li>';
+			echo '<a onclick="detail('.$value->id.','.$value->latitude.','.$value->longitude.')" class="item-search-click" ><li class="item_search"><img src="'.$value->image.'" /><ul class="item_search_child_container"><li class="name_section">'. $value->nama .'</li><li class="harga_section">'. $value->harga .'</li><li class="kabupaten_section">'. $value->nama_kabupaten .'</li></ul></li></a>';
 		}
 		?>
 	</ul>

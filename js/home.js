@@ -164,11 +164,57 @@ function saveData() {
   });
 }
 
+function update() {
+  var id = $('p#id_input').text();
+  var nama = $('input:text[name=nama]').val();
+  var alamat = $('input:text[name=alamat]').val();
+  var lat = $('input:text[name=latitude]').val();
+  var lng = $('input:text[name=longitude]').val();
+  var telp = $('input:text[name=telepon]').val();
+  var ket = $('input:text[name=keterangan]').val();
+  var harga = $('input:text[name=harga]').val();
+  var kabupaten = Number($('#kabupaten-selector').val());
+  var image = document.getElementById('image_file');
+
+  var formData = new FormData();
+  formData.append('id_rumah', id);
+  formData.append('nama', nama);
+  formData.append('alamat', alamat);
+  formData.append('latitude', lat);
+  formData.append('longitude', lng);
+  formData.append('no_telp', telp);
+  formData.append('keterangan', ket);
+  formData.append('kabupaten', kabupaten);
+  formData.append('harga', harga);
+  if (image.files.length > 0) {
+    formData.append('gambar', image.files[0], image.files[0].name);
+  } else {
+    formData.append('gambar', "");
+  }
+
+  // console.log("nama " + nama + ", alamat" + alamat + ", latitude" + lat + ", longitude" + lng + ", no_telp" + telp + ", keterangan" + ket +", harga" + harga + ", kabupaten : " + kabupaten);
+  console.log("id : " + $('p#id_input').text());
+  $.ajax({
+    url: "data/service/rumah_service.php",
+    type: 'POST',
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(result){
+      if (result == true) {
+        window.location.reload();
+      } else {
+        alert(result);
+      }
+    }
+  });
+}
+
 function allData() {
   $.ajax({
     url: "data/service/rumah_service.php",
     success: function(result){
-      // console.log("result all  : " + result);s
+      console.log("result all  : " + result);
       rumahArray = JSON.parse(result);
       if (rumahArray != null && rumahArray.length > 0) {
         for (var i = 0; i < rumahArray.length; i++) {
@@ -176,17 +222,19 @@ function allData() {
           var marker = new google.maps.Marker({
             position: myLatLng,
             map: map,
-            id: rumahArray[i][0]});
+            id_rumah : rumahArray[i][0]});
             // console.log("id rumah  : " + rumahArray[i][0]);
 
-            google.maps.event.addListener(marker, 'click', function(event) {
-              var currentLatlng = new google.maps.LatLng(event.latLng.lat(), event.latLng.lng());
-              map.setCenter(currentLatlng);
-              detail(marker.id, event.latLng.lat(), event.latLng.lng());
-            });
+            google.maps.event.addListener(marker, 'click', (function(marker, i, event) {
+               return function() {
+                 console.log("id marker : " + marker.get("id_rumah"));
+                 var currentLatlng = new google.maps.LatLng(Number(rumahArray[i][1]), Number(rumahArray[i][2]));
+                 map.setCenter(currentLatlng);
+                 detail(marker.get("id_rumah"), Number(rumahArray[i][1]), Number(rumahArray[i][2]));
+               }
+             })(marker, i));
           }
         }
-        // console.log("result rumahArray  : " + rumahArray.length);
       }
     });
   }
@@ -197,7 +245,7 @@ function allData() {
       url: "data/service/rumah_service.php",
       data: { 'id' : id, 'latitude' : lat, 'longitude' : lng },
       success: function(result){
-        // console.log("result detail  : " + result);
+        console.log("result detail  : " + result);
         var jsonResult = JSON.parse(result);
         jsonResult.distance_jogja = Number(distance(-7.803249, 110.3398253, jsonResult.latitude, jsonResult.longitude)).toFixed(2);
         var markerClickLocation = {lat: Number(jsonResult.latitude), lng: Number(jsonResult.longitude)};
@@ -209,13 +257,14 @@ function allData() {
         }, function(results, status) {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
             jsonResult.nearby_hospitals = results;
-            $.post( "detail.php", { detail: JSON.stringify(jsonResult) })
-            .done(function( data ) {
-              $("#detail").html(data);
-              $("#detail").css("width", "40%");
-              $("#map").css("width", "60%");
-            });
           }
+
+          $.post( "detail.php", { detail: JSON.stringify(jsonResult) })
+          .done(function( data ) {
+            $("#detail").html(data);
+            $("#detail").css("width", "40%");
+            $("#map").css("width", "60%");
+          });
         });
       }
     });
@@ -245,6 +294,44 @@ function allData() {
         window.location.reload();
       }
     });
+  }
+
+  function edit() {
+    console.log('param location : ' + 'latitude : ' + $("p#latitude-detail").text() + 'longitude : ' + $("p#longitude-detail").text());
+    $.ajax({
+      type: 'POST',
+      url: "data/service/rumah_service.php",
+      data: { 'edit' : true, 'id' : Number($("p#id_detail").text()) },
+      success: function(result){
+        console.log("result edit : " + result);
+        $.post( "input.php", { edit_result: result })
+        .done(function( data ) {
+          $("#detail").html(data);
+          $("#detail").css("width", "40%");
+          $("#map").css("width", "60%");
+        });
+      }
+    });
+  }
+
+  function hapus() {
+    $.ajax({
+      type: 'POST',
+      url: "data/service/rumah_service.php",
+      data: { 'id_hapus' : Number($("p#id_detail").text()) },
+      success: function(result){
+        console.log("result hapus : " + result);
+        if (result == true) {
+          window.location.reload();
+        } else {
+          alert(result);
+        }
+      }
+    });
+  }
+
+  function detailFromList() {
+
   }
 
   getLocation();

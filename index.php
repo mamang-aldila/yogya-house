@@ -6,6 +6,7 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Rumah dijual</title>
   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/home.css">

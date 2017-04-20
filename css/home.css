@@ -86,7 +86,7 @@ ul#item_search_container {
   list-style-type: none;
   padding: 0;
   margin-top: 15px;
-  display: inline-block;
+  display: inline-table;
 }
 
 .item_search:hover {
@@ -98,6 +98,7 @@ ul#item_search_container {
   list-style-type: none;
   padding: 0;
   float: left;
+  display: table-cell;
 }
 
 .item_search ul li.name_section {
@@ -122,9 +123,9 @@ ul#item_search_container {
   color: #737373;
 }
 
-.item_search img {
+.item_search .image_item_search_container {
+  display: table-cell;
   width: 100px;
-  height: 100%;
   float: left;
 }
 

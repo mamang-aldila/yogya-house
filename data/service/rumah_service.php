@@ -23,9 +23,9 @@ function find() {
 }
 
 function save() {
-	// $imagesFolder = "/Applications/XAMPP/htdocs/house-aldi/images/";
+	$imagesFolder = "/Applications/XAMPP/htdocs/house-aldi/images/";
 	// $imagesFolder = "http://rumah-yogya.esy.es/images/";
-	$imagesFolder = "/home/u655896071/public_html/images/";
+	// $imagesFolder = "/home/u655896071/public_html/images/";
 	$target_file = $imagesFolder . basename($_FILES["gambar"]["name"]);
 	$uploadOk = 1;
 	$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
@@ -39,8 +39,8 @@ function save() {
 		$uploadOk = 0;
 	}
 
-	// $image_location = "http://localhost/house-aldi/images/".$_FILES["gambar"]["name"];
-	$image_location = "http://rumah-yogya.esy.es/images/".$_FILES["gambar"]["name"];
+	$image_location = "http://localhost/house-aldi/images/".$_FILES["gambar"]["name"];
+	// $image_location = "http://rumah-yogya.esy.es/images/".$_FILES["gambar"]["name"];
 
 	if ($uploadOk == 0) {
 		echo "Sorry, your file was not uploaded.";
@@ -79,9 +79,9 @@ function update() {
 	// ', Harga : ' . $_POST['harga'] . ', Id Kabupaten : ' . $_POST['kabupaten'] . ', Id Rumah : ' . $_POST['id_rumah'];
 	$idRumah = (int) $_POST['id_rumah'];
 	if (isset($_FILES["gambar"])) {
-		// $imagesFolder = "/Applications/XAMPP/htdocs/house-aldi/images/";
+		$imagesFolder = "/Applications/XAMPP/htdocs/house-aldi/images/";
 		// $imagesFolder = "http://rumah-yogya.esy.es/images/";
-		$imagesFolder = "/home/u655896071/public_html/images/";
+		// $imagesFolder = "/home/u655896071/public_html/images/";
 		$target_file = $imagesFolder . basename($_FILES["gambar"]["name"]);
 		$uploadOk = 1;
 		$imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
@@ -93,8 +93,8 @@ function update() {
 			$uploadOk = 0;
 		}
 
-		// $image_location = "http://localhost/house-aldi/images/".$_FILES["gambar"]["name"];
-		$image_location = "http://rumah-yogya.esy.es/images/".$_FILES["gambar"]["name"];
+		$image_location = "http://localhost/house-aldi/images/".$_FILES["gambar"]["name"];
+		// $image_location = "http://rumah-yogya.esy.es/images/".$_FILES["gambar"]["name"];
 
 		if ($uploadOk == 0) {
 			echo "Sorry, your file was not uploaded.";

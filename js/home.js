@@ -7,12 +7,14 @@ function houseMap(lat, lng) {
   if (lat != null && lng != null) {
     positionFirst = new google.maps.LatLng(lat, lng);
   } else {
-    positionFirst = new google.maps.LatLng(-7.8032491, 110.3398252)
+    positionFirst = new google.maps.LatLng(-7.8032491, 110.3398252);
   }
+
+  console.log("Latitude: " + positionFirst.latitude +", Longitude: " + positionFirst.longitude);
 
   var mapOptions = {
     center: positionFirst,
-    zoom: 12,
+    zoom: 15,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   }
 
@@ -67,17 +69,17 @@ function showPosition(position) {
 function showError(error) {
   switch(error.code) {
     case error.PERMISSION_DENIED:
-    x.innerHTML = "User denied the request for Geolocation."
-    break;
+      alert("User tidak menyetujui permintaan lokasi");
+      break;
     case error.POSITION_UNAVAILABLE:
-    x.innerHTML = "Location information is unavailable."
-    break;
+      alert("Lokasi tidak tersedia");
+      break;
     case error.TIMEOUT:
-    x.innerHTML = "The request to get user location timed out."
-    break;
+      alert("Waktu habis untuk deteksi lokasi user");
+      break;
     case error.UNKNOWN_ERROR:
-    x.innerHTML = "An unknown error occurred."
-    break;
+      alert("Terjadi kesalahan");
+      break;
   }
 }
 
